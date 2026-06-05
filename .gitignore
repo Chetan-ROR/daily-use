@@ -49,3 +49,6 @@ app.*.map.json
 
 # Android generated build output
 android/build/
+
+# Generated Android packages
+*.apk
