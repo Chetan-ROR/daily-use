@@ -46,3 +46,6 @@ app.*.map.json
 
 # Local cloud-agent SDK/tool downloads
 .tooling/
+
+# Android generated build output
+android/build/
