@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../database/isar_service.dart';
 import '../models/life_record.dart';
+import '../../features/health/services/walking_tracker_service.dart';
 import '../repositories/life_repository.dart';
 
 class ThemeModeController extends Notifier<ThemeMode> {
@@ -62,3 +63,39 @@ final activityProvider = FutureProvider<List<ActivityLog>>((ref) async {
   final repository = await ref.watch(lifeRepositoryProvider.future);
   return repository.activity();
 });
+
+class WalkingTrackerController extends Notifier<WalkingTrackerState> {
+  late final WalkingTrackerService _service;
+
+  @override
+  WalkingTrackerState build() {
+    _service = WalkingTrackerService.instance;
+    void syncState() => state = _service.state;
+    _service.addListener(syncState);
+    _service.initialize().then((_) => state = _service.state);
+    ref.onDispose(() {
+      _service.removeListener(syncState);
+      _service.stop();
+    });
+    return _service.state;
+  }
+
+  Future<void> initialize() => _service.initialize();
+  Future<void> start() => _service.start();
+  Future<void> stop() => _service.stop();
+  Future<void> resetToday() => _service.resetToday();
+  Future<void> updateSettings({
+    required int goalSteps,
+    required double strideLengthMeters,
+    required double weightKg,
+  }) => _service.updateSettings(
+    goalSteps: goalSteps,
+    strideLengthMeters: strideLengthMeters,
+    weightKg: weightKg,
+  );
+}
+
+final walkingTrackerProvider =
+    NotifierProvider<WalkingTrackerController, WalkingTrackerState>(
+      WalkingTrackerController.new,
+    );

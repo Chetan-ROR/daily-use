@@ -12,6 +12,7 @@ import '../common/screens/reports_screen.dart';
 import '../common/screens/settings_screen.dart';
 import '../core/constants/app_modules.dart';
 import '../features/dashboard/screens/dashboard_screen.dart';
+import '../features/health/screens/health_screen.dart';
 import '../features/profile/screens/profile_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -62,6 +63,9 @@ final routerProvider = Provider<GoRouter>((ref) {
           final module = AppModules.byId(
             state.pathParameters['module'] ?? 'notes',
           );
+          if (module.id == 'health') {
+            return const AppShell(child: HealthScreen());
+          }
           return AppShell(child: FeatureCrudScreen(module: module));
         },
       ),

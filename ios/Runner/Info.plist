@@ -66,5 +66,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSMotionUsageDescription</key>
+	<string>Life Manager Pro uses motion data to calculate your walking steps, distance, and calories.</string>
 </dict>
 </plist>

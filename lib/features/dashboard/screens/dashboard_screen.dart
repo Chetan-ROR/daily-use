@@ -18,6 +18,7 @@ class DashboardScreen extends ConsumerWidget {
     final records = ref.watch(allRecordsProvider);
     final profile = ref.watch(profileProvider).asData?.value;
     final activity = ref.watch(activityProvider).asData?.value ?? [];
+    final walkingState = ref.watch(walkingTrackerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -85,9 +86,6 @@ class DashboardScreen extends ConsumerWidget {
                     record.category.toLowerCase() == 'income',
               )
               .fold<double>(0, (sum, record) => sum + record.amount);
-          final health = records
-              .where((record) => record.module == 'health')
-              .toList();
           final goals = records
               .where((record) => record.module == 'goals')
               .toList();
@@ -177,9 +175,11 @@ class DashboardScreen extends ConsumerWidget {
                       route: '/feature/expenses',
                     ),
                     _MetricCard(
-                      title: 'Health Logs',
-                      value: '${health.length}',
-                      icon: Icons.health_and_safety_outlined,
+                      title: 'Today Steps',
+                      value: NumberFormat.decimalPattern().format(
+                        walkingState.todaySteps,
+                      ),
+                      icon: Icons.directions_walk,
                       color: AppModules.health.accent,
                       route: '/feature/health',
                     ),
