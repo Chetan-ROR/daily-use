@@ -673,7 +673,7 @@ class _RecordEditorState extends ConsumerState<_RecordEditor> {
   }
 
   Future<void> _pickFiles() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    final result = await FilePicker.pickFiles();
     if (result == null) return;
     setState(() => _attachments.addAll(result.paths.whereType<String>()));
   }

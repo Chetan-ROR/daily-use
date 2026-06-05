@@ -102,7 +102,7 @@ class SettingsScreen extends ConsumerWidget {
                     'Restore pipeline is prepared for validation/import',
                   ),
                   onTap: () async {
-                    final result = await FilePicker.platform.pickFiles(
+                    final result = await FilePicker.pickFiles(
                       type: FileType.custom,
                       allowedExtensions: ['json'],
                     );
