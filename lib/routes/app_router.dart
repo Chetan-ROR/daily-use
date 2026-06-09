@@ -12,6 +12,7 @@ import '../common/screens/reports_screen.dart';
 import '../common/screens/settings_screen.dart';
 import '../core/constants/app_modules.dart';
 import '../features/dashboard/screens/dashboard_screen.dart';
+import '../features/expenses/screens/daily_expense_screen.dart';
 import '../features/health/screens/health_screen.dart';
 import '../features/profile/screens/profile_screen.dart';
 
@@ -65,6 +66,9 @@ final routerProvider = Provider<GoRouter>((ref) {
           );
           if (module.id == 'health') {
             return const AppShell(child: HealthScreen());
+          }
+          if (module.id == 'expenses') {
+            return const AppShell(child: DailyExpenseScreen());
           }
           return AppShell(child: FeatureCrudScreen(module: module));
         },
