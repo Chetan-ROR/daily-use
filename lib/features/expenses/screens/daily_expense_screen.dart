@@ -392,34 +392,43 @@ class _ExpenseChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Expense Graph',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              SegmentedButton<_ExpenseChartRange>(
-                segments: const [
-                  ButtonSegment(
-                    value: _ExpenseChartRange.daily,
-                    label: Text('Daily'),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final selector = _RangeSelector(
+                range: range,
+                onRangeChanged: onRangeChanged,
+              );
+              if (constraints.maxWidth < 420) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Expense Graph',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 12),
+                    selector,
+                  ],
+                );
+              }
+
+              return Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Expense Graph',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                   ),
-                  ButtonSegment(
-                    value: _ExpenseChartRange.weekly,
-                    label: Text('Weekly'),
-                  ),
-                  ButtonSegment(
-                    value: _ExpenseChartRange.monthly,
-                    label: Text('Monthly'),
-                  ),
+                  const SizedBox(width: 12),
+                  selector,
                 ],
-                selected: {range},
-                onSelectionChanged: (selection) =>
-                    onRangeChanged(selection.first),
-              ),
-            ],
+              );
+            },
           ),
           const SizedBox(height: 16),
           if (records.isEmpty)
@@ -493,6 +502,35 @@ class _ExpenseChart extends StatelessWidget {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class _RangeSelector extends StatelessWidget {
+  const _RangeSelector({required this.range, required this.onRangeChanged});
+
+  final _ExpenseChartRange range;
+  final ValueChanged<_ExpenseChartRange> onRangeChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SegmentedButton<_ExpenseChartRange>(
+        segments: const [
+          ButtonSegment(value: _ExpenseChartRange.daily, label: Text('Daily')),
+          ButtonSegment(
+            value: _ExpenseChartRange.weekly,
+            label: Text('Weekly'),
+          ),
+          ButtonSegment(
+            value: _ExpenseChartRange.monthly,
+            label: Text('Monthly'),
+          ),
+        ],
+        selected: {range},
+        onSelectionChanged: (selection) => onRangeChanged(selection.first),
       ),
     );
   }
