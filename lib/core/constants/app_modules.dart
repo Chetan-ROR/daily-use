@@ -75,8 +75,8 @@ class AppModules {
   );
   static const expenses = AppModule(
     id: 'expenses',
-    title: 'Expenses',
-    subtitle: 'Income, spend, budgets and reports',
+    title: 'Daily Expenses',
+    subtitle: 'Quick daily spend, totals and graphs',
     icon: Icons.account_balance_wallet_outlined,
     accent: Color(0xff14b8a6),
     supportsAmount: true,

@@ -17,6 +17,11 @@ class AppShell extends StatelessWidget {
       _NavItem('/dashboard', 'Dashboard', Icons.dashboard_outlined),
       _NavItem('/feature/tasks', 'Tasks', Icons.task_alt_outlined),
       _NavItem('/feature/notes', 'Notes', Icons.sticky_note_2_outlined),
+      _NavItem(
+        '/feature/expenses',
+        'Expense',
+        Icons.account_balance_wallet_outlined,
+      ),
       _NavItem('/calendar', 'Calendar', Icons.calendar_month_outlined),
       _NavItem('/settings', 'Settings', Icons.settings_outlined),
     ];
